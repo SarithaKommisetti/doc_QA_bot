@@ -1,7 +1,6 @@
 import os
 from pypdf import PdfReader
-from vector_store import get_collection
-
+from src.vector_store import get_collection
 def extract_pdf_pages(file_path):
     extracted = []
 

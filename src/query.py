@@ -2,7 +2,7 @@ import os
 import google.generativeai as genai
 from dotenv import load_dotenv
 
-from vector_store import get_collection
+from src.vector_store import get_collection
 
 load_dotenv()
 
