@@ -1,10 +1,6 @@
 import chromadb
-from chromadb.utils import embedding_functions
-from src.config import GEMINI_API_KEY
-from config import (
-    DB_PATH,
-    COLLECTION_NAME
-)
+from chromadb.utils.embedding_functions import GoogleGenerativeAiEmbeddingFunction
+from src.config import GEMINI_API_KEY, DB_PATH, COLLECTION_NAME
 
 def get_collection():
 
@@ -12,8 +8,9 @@ def get_collection():
         path=DB_PATH
     )
 
-    embedding_function = (
-        embedding_functions.DefaultEmbeddingFunction()
+    embedding_function = GoogleGenerativeAiEmbeddingFunction(
+        api_key=GEMINI_API_KEY,
+        model_name="models/text-embedding-004"
     )
 
     collection = client.get_or_create_collection(
