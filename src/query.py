@@ -1,7 +1,7 @@
 import os
 import google.generativeai as genai
 from dotenv import load_dotenv
-
+from src.config import GEMINI_API_KEY
 from src.vector_store import get_collection
 
 load_dotenv()

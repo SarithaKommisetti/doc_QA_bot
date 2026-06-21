@@ -1,6 +1,7 @@
 import os
 from pypdf import PdfReader
 from src.vector_store import get_collection
+from src.config import GEMINI_API_KEY
 def extract_pdf_pages(file_path):
     extracted = []
 

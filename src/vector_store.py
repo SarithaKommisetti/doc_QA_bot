@@ -1,6 +1,6 @@
 import chromadb
 from chromadb.utils import embedding_functions
-
+from src.config import GEMINI_API_KEY
 from config import (
     DB_PATH,
     COLLECTION_NAME
