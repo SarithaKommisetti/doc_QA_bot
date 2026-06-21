@@ -4,9 +4,7 @@ from src.config import GEMINI_API_KEY, DB_PATH, COLLECTION_NAME
 
 def get_collection():
 
-    client = chromadb.PersistentClient(
-        path=DB_PATH
-    )
+    client = chromadb.PersistentClient(path=DB_PATH)
 
     embedding_function = GoogleGenerativeAiEmbeddingFunction(
         api_key=GEMINI_API_KEY,

@@ -1,7 +1,6 @@
 import os
 import google.generativeai as genai
 from dotenv import load_dotenv
-from src.config import GEMINI_API_KEY
 from src.vector_store import get_collection
 
 load_dotenv()
@@ -9,7 +8,6 @@ load_dotenv()
 genai.configure(
     api_key=os.getenv("GEMINI_API_KEY")
 )
-
 
 def query_rag(user_query, k=3):
 
@@ -42,7 +40,6 @@ You are a document question-answering assistant.
 Use ONLY the context provided below.
 
 If the answer is not present in the context, say:
-
 "I cannot find the answer in the provided documents."
 
 CONTEXT:
@@ -54,13 +51,9 @@ QUESTION:
 ANSWER:
 """
 
-    model = genai.GenerativeModel(
-    "gemini-2.5-flash"
-    )
+    model = genai.GenerativeModel("gemini-1.5-flash")
 
-    response = model.generate_content(
-        prompt
-    )
+    response = model.generate_content(prompt)
 
     return response.text
 
@@ -68,15 +61,9 @@ ANSWER:
 if __name__ == "__main__":
 
     while True:
+        q = input("Ask a question (or type exit): ")
 
-        question = input(
-            "\nAsk a question (or type exit): "
-        )
-
-        if question.lower() == "exit":
+        if q.lower() == "exit":
             break
 
-        answer = query_rag(question)
-
-        print("\nAnswer:")
-        print(answer)
+        print(query_rag(q))
