@@ -1,28 +1,33 @@
 import chromadb
-import google.generativeai as genai
-from src.config import GEMINI_API_KEY, DB_PATH, COLLECTION_NAME
+from src.config import DB_PATH, COLLECTION_NAME, GEMINI_API_KEY
+from google import genai
 
-genai.configure(api_key=GEMINI_API_KEY)
+client = genai.Client(api_key=GEMINI_API_KEY)
 
-# 🔥 MANUAL EMBEDDING FUNCTION (NO CHROMA WRAPPER)
+
 def get_embedding(text):
-    response = genai.embed_content(
-        model="models/text-embedding-004",
-        content=text
+    response = client.models.embed_content(
+        model="text-embedding-004",
+        contents=text
     )
-    return response["embedding"]
+    return response.embeddings[0].values
 
-# wrapper class for chromadb
-class GeminiEmbeddingFunction:
-    def __call__(self, input):
-        return [get_embedding(t) for t in input]
+
+import chromadb
+from chromadb.utils import embedding_functions
+from src.config import DB_PATH, COLLECTION_NAME
+
 
 def get_collection():
     client = chromadb.PersistentClient(path=DB_PATH)
 
+    embedding_function = (
+        embedding_functions.DefaultEmbeddingFunction()
+    )
+
     collection = client.get_or_create_collection(
         name=COLLECTION_NAME,
-        embedding_function=GeminiEmbeddingFunction()
+        embedding_function=embedding_function
     )
 
     return collection

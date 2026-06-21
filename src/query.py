@@ -1,13 +1,12 @@
-import os
-import google.generativeai as genai
+from google import genai
+from src.config import GEMINI_API_KEY
+
+client = genai.Client(api_key=GEMINI_API_KEY)
 from dotenv import load_dotenv
 from src.vector_store import get_collection
 
 load_dotenv()
 
-genai.configure(
-    api_key=os.getenv("GEMINI_API_KEY")
-)
 
 def query_rag(user_query, k=3):
 
@@ -51,9 +50,10 @@ QUESTION:
 ANSWER:
 """
 
-    model = genai.GenerativeModel("gemini-1.5-flash")
-
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+    model="gemini-2.5-flash",
+    contents=prompt
+)
 
     return response.text
 

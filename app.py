@@ -11,4 +11,4 @@ if st.button("Get Answer"):
     if question.strip():
         result = query_rag(question)
         st.subheader("Answer")
-        st.write(result["answer"])
+        st.write(result) 
